@@ -1,0 +1,40 @@
+{
+  "programme": "Payment Security Modernisation",
+  "sponsor": "Director of Operations & Technology",
+  "status_date": "2026-10-31",
+  "currency": "IDR m",
+  "work_packages": [
+    {"id": "WP1", "name": "Discovery, BRD and solution design", "owner": "Business Analysis", "start": "2026-02-02", "finish": "2026-03-27", "budget": 1200, "complete": 1.00, "actual": 1150},
+    {"id": "WP2", "name": "HSM procurement and installation", "owner": "IT Infrastructure", "start": "2026-03-02", "finish": "2026-07-31", "budget": 62000, "complete": 1.00, "actual": 60540},
+    {"id": "WP3", "name": "HSM Services API build", "owner": "Development", "start": "2026-04-06", "finish": "2026-10-30", "budget": 9500, "complete": 0.85, "actual": 8900},
+    {"id": "WP4", "name": "Security testing and remediation", "owner": "Quality Engineering", "start": "2026-07-06", "finish": "2026-11-27", "budget": 2800, "complete": 0.70, "actual": 2050},
+    {"id": "WP5", "name": "Channel migration (switch, mobile, cards)", "owner": "Payments Technology", "start": "2026-09-01", "finish": "2027-02-26", "budget": 8000, "complete": 0.18, "actual": 1700},
+    {"id": "WP6", "name": "PCI PIN readiness and audit support", "owner": "Information Security", "start": "2026-10-01", "finish": "2027-03-31", "budget": 2500, "complete": 0.10, "actual": 300},
+    {"id": "WP7", "name": "PMO and change management", "owner": "PMO", "start": "2026-02-02", "finish": "2027-03-31", "budget": 3000, "complete": 0.66, "actual": 2050}
+  ],
+  "milestones": [
+    {"id": "M1", "name": "BRD baselined", "baseline": "2026-03-27", "forecast": "2026-03-27", "actual": "2026-03-25"},
+    {"id": "M2", "name": "HSMs installed in both data centres", "baseline": "2026-07-31", "forecast": "2026-07-31", "actual": "2026-08-07"},
+    {"id": "M3", "name": "API feature complete", "baseline": "2026-10-30", "forecast": "2026-11-20", "actual": ""},
+    {"id": "M4", "name": "Security sign-off (no high findings)", "baseline": "2026-11-27", "forecast": "2026-12-11", "actual": ""},
+    {"id": "M5", "name": "All channels migrated", "baseline": "2027-02-26", "forecast": "2027-03-12", "actual": ""},
+    {"id": "M6", "name": "PCI PIN assessment passed", "baseline": "2027-03-31", "forecast": "2027-03-31", "actual": ""}
+  ],
+  "history": [
+    {"month": "2026-02", "ev": 650, "ac": 640},
+    {"month": "2026-03", "ev": 2100, "ac": 2050},
+    {"month": "2026-04", "ev": 14500, "ac": 14300},
+    {"month": "2026-05", "ev": 33000, "ac": 32200},
+    {"month": "2026-06", "ev": 52500, "ac": 51600},
+    {"month": "2026-07", "ev": 66000, "ac": 64800},
+    {"month": "2026-08", "ev": 69800, "ac": 68500},
+    {"month": "2026-09", "ev": 72600, "ac": 71900}
+  ],
+  "sprints": [
+    {"sprint": 1, "committed": 8, "completed": 8},
+    {"sprint": 2, "committed": 13, "completed": 13},
+    {"sprint": 3, "committed": 13, "completed": 13},
+    {"sprint": 4, "committed": 8, "completed": 8},
+    {"sprint": 5, "committed": 8, "completed": 3}
+  ]
+}
