@@ -56,7 +56,7 @@ def main() -> None:
         month_end = min(month_end, status)
         pv.append(sum(wp["budget"] * planned_fraction(date.fromisoformat(wp["start"]), date.fromisoformat(wp["finish"]), month_end) for wp in plan["work_packages"]) / 1000)
     body += rk.section("S-curve: planned, earned and actual (IDR bn, cumulative)", rk.lines(
-        [("Planned value", [round(v, 1) for v in pv], "var(--line)"), ("Earned value", [round(v, 1) for v in ev], "var(--blue)"), ("Actual cost", [round(v, 1) for v in ac], "var(--orange)")],
+        [("Planned value", [round(v, 1) for v in pv], "var(--muted)"), ("Earned value", [round(v, 1) for v in ev], "var(--blue)"), ("Actual cost", [round(v, 1) for v in ac], "var(--orange)")],
         [m[2:] for m in months]))
 
     wp_rows = [[wp["id"], wp["name"], wp["owner"], f"{wp['complete']:.0%}", f"{e.pv:,.0f}", f"{e.ev:,.0f}", f"{e.ac:,.0f}", f"{e.cpi:.2f}", f"{e.spi:.2f}", rk.pill(rag(min(e.cpi, e.spi)))] for wp, e in rows]
@@ -98,11 +98,24 @@ def main() -> None:
         overall = "Amber"
     budget = "on budget" if total.vac >= 0 else "over budget"
     verdict = (f"Overall {overall}: {budget}, {len(late)} milestone{'s' if len(late) != 1 else ''} forecast late", tone(overall))
+    top_risk = max(open_risks, key=risk_score) if open_risks else None
+    takeaways = [
+        f"Cost: every Rp 1 spent has delivered Rp {total.cpi:.2f} of planned work, so the programme is "
+        f"{'on' if round(total.cpi, 2) == 1 else 'under' if total.cpi > 1 else 'over'} budget "
+        f"(CPI {total.cpi:.2f}); the forecast final cost is Rp {total.eac / 1000:,.1f} bn against a Rp {total.bac / 1000:,.1f} bn budget.",
+        f"Schedule: work is moving at {total.spi:.0%} of the planned pace (SPI {total.spi:.2f}) and {total.ev / total.bac:.0%} of the scope is done, "
+        f"against {total.pv / total.bac:.0%} planned by {status:%d %B}.",
+        (f"{len(late)} milestone{'s are' if len(late) != 1 else ' is'} forecast late: " + "; ".join(f"{m['id']} {m['name']} ({milestone_slip(m):+d} days)" for m in late) + "."
+         if late else "Every remaining milestone is forecast on or before its baseline date."),
+        f"Security quality gate: {gate_value} security tests passing, {gate_note}.",
+    ]
+    if top_risk:
+        takeaways.append(f"Top risk to watch: {top_risk['id']} {top_risk['title']} (score {risk_score(top_risk)}, owner {top_risk['owner']}).")
     rk.write(str(ROOT / "site" / "index.html"), rk.page(
         title="Programme Health",
         eyebrow="Project Manager · Status report",
         summary=f"Status of the {plan['programme']} programme at {status:%d %B %Y}: earned value, milestones, RAID log, delivery velocity and the live security quality gate.",
-        body=body, repo="project-health-dashboard", verdict=verdict,
+        body=body, repo="project-health-dashboard", verdict=verdict, takeaways=takeaways,
     ))
     print(f"dashboard built: CPI {total.cpi:.2f} SPI {total.spi:.2f}")
 
